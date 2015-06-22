@@ -31,18 +31,19 @@
 
     //AGREGAR
     $scope.addTareaPregunta = function(){
-      pregunta = confirm("Esta seguro de agregar una tarea?");
-      if(pregunta){  
         this.newTarea = {nombre: '', descripcion: '', responsable: '', fecha_cierre: '', colaboradores: [{nombre:''}], comentarios: [{txt:''}]};
         this.newTarea.colaboradores.splice(0,1);
         this.newTarea.comentarios.splice(0,1);
         $scope.addNewTarea = true;
-      }        
     }
 
     $scope.addTarea = function(newT){
-      $scope.tareas.push(newT);
-      tareaService.addTarea($scope.tareas);
+      pregunta = confirm("Esta seguro de agregar una tarea?");
+      if(pregunta){  
+        $scope.tareas.push(newT);
+        tareaService.addTarea($scope.tareas);
+        $scope.addNewTarea = false;
+      }
     }
     $scope.addColaborador = function(newTarea){
       this.newTarea.colaboradores.push({nombre: ""});
