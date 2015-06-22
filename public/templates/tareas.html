@@ -1,0 +1,118 @@
+
+<section ng-init="getTareas()">
+  <div ng-click="addTareaPregunta()" ng-hide="addNewTarea" class="agregar btn"> <strong>Agregar Tarea</strong></div>
+  <div ng-show="tareas.length == 0 &amp;&amp; !addNewTarea">
+    <h2 class="title">No hay tareas</h2>
+  </div>
+  <ul ng-repeat="tarea in tareas | orderBy:'fecha_cierre' track by $index " ng-hide="addNewTarea">
+    <div ng-hide="editing" class="task">
+      <div class="task-header">
+        <figure class="task-header-bg"></figure>
+        <figure class="task-header-logo"></figure>
+        <h2>{{tarea.nombre}}</h2>
+        <time datetime="{{tarea.fecha_cierre}}">{{tarea.fecha_cierre | date: "dd-MM-yyyy"}}</time>
+      </div>
+      <div class="task-info">
+        <h3><strong>Descripción:</strong></h3>
+        <p>{{tarea.descripcion}}</p>
+        <h3><strong>Colaboradores:</strong></h3>
+        <ul>
+          <li ng-repeat="colaborador in tarea.colaboradores">{{colaborador.nombre}}</li>
+          <li ng-if="tarea.colaboradores.length == 0">No hay colaboradores</li>
+        </ul>
+        <h3><strong>Comentarios:</strong></h3>
+        <ul> 
+          <li ng-repeat="comentario in tarea.comentarios">{{comentario.txt}}</li>
+          <li ng-if="tarea.comentarios.length == 0">No hay comentarios</li>
+        </ul>
+        <div class="task-btns">
+          <div ng-click="editing = true; copy(newTarea, tarea);" class="edit btn">Editar</div>
+          <div ng-click="delTarea(tarea)" class="edit btn">Borrar</div>
+        </div>
+      </div>
+    </div>
+    <form ng-show="editing" ng-submit="editTarea(tarea,newTarea); editing = false;" class="task">
+      <div class="task-header">
+        <figure class="task-header-bg"></figure>
+        <figure class="task-header-logo"></figure>
+        <h2>{{newTarea.nombre}}</h2>
+        <time datetime="{{tarea.fecha_cierre}}">{{newTarea.fecha_cierre | date: "dd-MM-yyyy"}}</time>
+      </div>
+      <div class="task-info edit-mode">
+        <h3><span><strong>Nombre:</strong></span>
+          <input type="text" ng-model="newTarea.nombre" placeholder="{{tarea.nombre}}" ng-required="ng-required"/>
+        </h3>
+        <h3><span><strong>Descripción:</strong></span>
+          <input type="text" ng-model="newTarea.descripcion" placeholder="{{tarea.descripcion}}"/>
+        </h3>
+        <h3><span><strong>Responsable:</strong></span>
+          <input type="text" ng-model="newTarea.responsable" placeholder="{{tarea.responsable}}" ng-required="ng-required"/>
+        </h3>
+        <h3><span><strong> Fecha de cierre:</strong></span>
+          <input type="date" ng-model="newTarea.fecha_cierre" min="2015-06-22" max="2020-12-31" value="2011-01-13" required="required"/>
+        </h3>
+        <h3><span><strong> Colaboradores:</strong></span></h3>
+        <ul>
+          <li ng-if="newTarea.colaboradores.length == 0">No hay colaboradores</li>
+          <li ng-repeat="colaborador in newTarea.colaboradores">
+            <input type="text" ng-model="colaborador.nombre" placeholder="{{tarea.colaboradores[$index].nombre}}"/>
+            <div ng-click="delColaborador(newTarea,colaborador)" class="btn delete"> Borrar</div>
+          </li>
+        </ul>
+        <div ng-click="addColaborador(newTarea)" class="btn add"> Agregar</div>
+        <h3><span><strong> Comentarios:</strong></span></h3>
+        <ul>
+          <li ng-if="newTarea.comentarios.length == 0">No hay comentarios</li>
+        </ul>
+        <div ng-repeat="comentario in newTarea.comentarios" class="comentario">
+          <textarea type="text" ng-model="comentario.txt" placeholder="{{tarea.comentarios[$index].txt}}"></textarea>
+          <div ng-click="delComentario(newTarea,comentario)" class="btn delete"> Borrar</div>
+        </div>
+        <div ng-click="addComentario(newTarea)" class="btn add"> Agregar</div>
+        <div class="task-btns">
+          <input type="submit" value="Guardar" class="btn edit"/>
+          <div ng-click="editing = false" class="btn edit">Cancelar</div>
+        </div>
+      </div>
+    </form>
+  </ul>
+  <form ng-submit="addTarea(newTarea); addNewTarea = false;" ng-show="addNewTarea" class="task add-mode">
+    <div class="titleSection"> <strong>Nueva Tarea</strong></div>
+    <div class="task-info edit-mode">
+      <h3><span><strong>Nombre:</strong></span>
+        <input type="text" ng-model="newTarea.nombre" required="required"/>
+      </h3>
+      <h3><span><strong>Descripción:</strong></span>
+        <input type="text" ng-model="newTarea.descripcion"/>
+      </h3>
+      <h3><span><strong>Responsable:</strong></span>
+        <input type="text" ng-model="newTarea.responsable" required="required"/>
+      </h3>
+      <h3><span><strong> Fecha de cierre:</strong></span>
+        <input type="date" ng-model="newTarea.fecha_cierre" min="2015-06-22" max="2020-12-31" value="2011-01-13" required="required"/>
+      </h3>
+      <h3><span><strong> Colaboradores:</strong></span></h3>
+      <ul>
+        <li ng-if="newTarea.colaboradores.length == 0">No hay colaboradores</li>
+        <li ng-repeat="colaborador in newTarea.colaboradores">
+          <input type="text" ng-model="colaborador.nombre"/>
+          <div ng-click="delColaborador(newTarea,colaborador)" class="btn delete"> Borrar</div>
+        </li>
+      </ul>
+      <div ng-click="addColaborador(newTarea)" class="btn add"> Agregar</div>
+      <h3><span><strong> Comentarios:</strong></span></h3>
+      <ul>
+        <li ng-if="newTarea.comentarios.length == 0">No hay comentarios</li>
+      </ul>
+      <div ng-repeat="comentario in newTarea.comentarios" class="comentario">
+        <textarea type="text" ng-model="comentario.txt"></textarea>
+        <div ng-click="delComentario(newTarea,comentario)" class="btn delete"> Borrar</div>
+      </div>
+      <div ng-click="addComentario(newTarea)" class="btn add"> Agregar</div>
+      <div class="task-btns">
+        <input type="submit" value="Guardar" class="btn edit"/>
+        <div ng-click="addNewTarea = false" class="btn edit">Cancelar</div>
+      </div>
+    </div>
+  </form>
+</section>

@@ -1,0 +1,150 @@
+section(ng-init="getTareas()")
+  //-Add-Card
+  div(ng-click="addTareaPregunta()" ng-hide="addNewTarea").agregar.btn 
+    strong Agregar Tarea
+  //-Add-Card-End  
+  //-Card
+
+  div(ng-show="tareas.length == 0 && !addNewTarea")
+    h2.title No hay tareas
+  ul(ng-repeat="tarea in tareas | orderBy:'fecha_cierre' track by $index " ng-hide="addNewTarea")
+    //-Card-View
+    div(ng-hide="editing").task
+      //- Encabezado
+      div.task-header
+        figure.task-header-bg
+        figure.task-header-logo
+        h2 {{tarea.nombre}}
+        time(datetime="{{tarea.fecha_cierre}}") {{tarea.fecha_cierre | date: "dd-MM-yyyy"}}
+      div.task-info
+        h3
+          strong Descripción:
+        p {{tarea.descripcion}}
+        //-Colaboradores
+        h3
+          strong Colaboradores:
+        ul
+          li(ng-repeat="colaborador in tarea.colaboradores") {{colaborador.nombre}}
+          li(ng-if="tarea.colaboradores.length == 0") No hay colaboradores
+        //-Comentarios
+        h3
+          strong Comentarios:
+        ul 
+          li(ng-repeat="comentario in tarea.comentarios") {{comentario.txt}}
+          li(ng-if="tarea.comentarios.length == 0") No hay comentarios
+
+        div.task-btns
+          div(ng-click="editing = true; copy(newTarea, tarea);").edit.btn Editar
+          div(ng-click="delTarea(tarea)").edit.btn Borrar
+    //-Card-View-End
+
+    //-Card-Editing
+    form(ng-show="editing" ng-submit="editTarea(tarea,newTarea); editing = false;").task
+      div.task-header
+        figure.task-header-bg
+        figure.task-header-logo
+        h2 {{newTarea.nombre}}
+        time(datetime="{{tarea.fecha_cierre}}") {{newTarea.fecha_cierre | date: "dd-MM-yyyy"}}
+      div.task-info.edit-mode
+        h3
+          span
+            strong Nombre:
+          input(type="text" ng-model="newTarea.nombre" placeholder="{{tarea.nombre}}" ng-required)
+        h3
+          span
+            strong Descripción:
+          input(type="text" ng-model="newTarea.descripcion" placeholder="{{tarea.descripcion}}")
+        h3
+          span
+            strong Responsable:
+          input(type="text" ng-model="newTarea.responsable" placeholder="{{tarea.responsable}}" ng-required)
+        h3
+          span
+            strong  Fecha de cierre:
+          input(type="date" ng-model="newTarea.fecha_cierre" min="2015-06-22" max="2020-12-31" value="2011-01-13" required)
+        h3
+          span
+            strong  Colaboradores:
+        ul
+          li(ng-if="newTarea.colaboradores.length == 0") No hay colaboradores
+          li(ng-repeat="colaborador in newTarea.colaboradores")
+            input(type="text" ng-model="colaborador.nombre" placeholder="{{tarea.colaboradores[$index].nombre}}" )
+            div(ng-click="delColaborador(newTarea,colaborador)").btn.delete  Borrar
+        div(ng-click="addColaborador(newTarea)").btn.add  Agregar
+        h3
+          span
+            strong  Comentarios:
+        ul
+          li(ng-if="newTarea.comentarios.length == 0") No hay comentarios
+        div(ng-repeat="comentario in newTarea.comentarios").comentario
+          textarea(type="text" ng-model="comentario.txt" placeholder="{{tarea.comentarios[$index].txt}}")
+          div(ng-click="delComentario(newTarea,comentario)").btn.delete  Borrar
+        div(ng-click="addComentario(newTarea)").btn.add  Agregar
+        div.task-btns
+          input(type="submit" value="Guardar").btn.edit
+          div(ng-click="editing = false").btn.edit Cancelar
+    //-Card-Editing-End
+  //-Card-End
+  //-Card-New
+  form(ng-submit="addTarea(newTarea); addNewTarea = false;" ng-show="addNewTarea").task.add-mode
+      div.titleSection 
+        strong Nueva Tarea
+
+      div.task-info.edit-mode
+        h3
+          span
+            strong Nombre:
+          input(type="text" ng-model="newTarea.nombre" required)
+        h3
+          span
+            strong Descripción:
+          input(type="text" ng-model="newTarea.descripcion")
+        h3
+          span
+            strong Responsable:
+          input(type="text" ng-model="newTarea.responsable" required)
+        h3
+          span
+            strong  Fecha de cierre:
+          input(type="date" ng-model="newTarea.fecha_cierre" min="2015-06-22" max="2020-12-31" value="2011-01-13" required)
+        h3
+          span
+            strong  Colaboradores:
+        ul
+          li(ng-if="newTarea.colaboradores.length == 0") No hay colaboradores
+          li(ng-repeat="colaborador in newTarea.colaboradores")
+            input(type="text" ng-model="colaborador.nombre" )
+            div(ng-click="delColaborador(newTarea,colaborador)").btn.delete  Borrar
+        div(ng-click="addColaborador(newTarea)").btn.add  Agregar
+        h3
+          span
+            strong  Comentarios:
+        ul
+          li(ng-if="newTarea.comentarios.length == 0") No hay comentarios
+        div(ng-repeat="comentario in newTarea.comentarios").comentario
+          textarea(type="text" ng-model="comentario.txt")
+          div(ng-click="delComentario(newTarea,comentario)").btn.delete  Borrar
+        div(ng-click="addComentario(newTarea)").btn.add  Agregar
+        div.task-btns
+          input(type="submit" value="Guardar").btn.edit
+          div(ng-click="addNewTarea = false").btn.edit Cancelar
+  //-Card-New-End
+
+//-Card-Add
+  form(ng-submit="addTarea(t)" ng-hide="edit")
+  table
+    thead
+      th(colspan="4")
+        strong Agregar tarea
+    tr
+      td
+        input(ng-model="t.nombre"      type="text" placeholder="Nombre"        required)
+      td
+        input(ng-model="t.descripcion"      type="text" placeholder="Descripcion")
+      td
+        input(ng-model="t.responsable"      type="text" placeholder="Responsable"        required)
+      td
+        input(ng-model="t.fecha_cierre" type="date" min="2015-06-22" value="2011-01-13"  required)
+      td
+        input(type="submit"  value="Agregar")
+//-Card-Add-End

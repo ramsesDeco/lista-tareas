@@ -1,0 +1,201 @@
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+html {
+  margin: 0;
+  padding: 0;
+  padding-top: 50px;
+  background: #eee;
+  font-size: 17px;
+  height: 100%;
+  overflow: auto;
+  font-family: Arial;
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 17px;
+}
+a:hover,
+a:link,
+a:visited,
+a:active a:focus {
+  color: inherit;
+  text-decoration: none;
+}
+/************************ card ****************************************/
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.task {
+  margin: 0 auto;
+}
+.task-header {
+  color: #fff;
+  text-shadow: 4px 3px 4px rgba(0,0,0,0.6);
+  padding: 0 10px;
+  position: relative;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -o-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -moz-box-pack: justify;
+  -o-box-pack: justify;
+  -ms-flex-pack: justify;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  text-align: center;
+}
+.task-header-bg {
+  z-index: -1;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("../img/bg-header.jpg");
+  background-attachment: fixed;
+  background-position: center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -webkit-filter: blur(2px);
+  -moz-filter: blur(2px);
+  -o-filter: blur(2px);
+  -ms-filter: blur(2px);
+  filter: blur(2px);
+}
+.task-header-logo {
+  background-image: url("../img/task.png");
+  -webkit-background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
+  background-size: 100% 100%;
+  width: 45px;
+  height: 45px;
+  padding: 0;
+  margin: 0;
+  -webkit-flex-shrink: 0;
+  flex-shrink: 0;
+  display: inline-block;
+}
+.task-header h2 {
+  padding: 0 10px;
+}
+.task-info {
+  padding: 5px 12px;
+}
+.task-info h3,
+.task-info p,
+.task-info ul {
+  list-style: inside circle;
+  margin: 1em 0;
+}
+.task-btns {
+  text-align: center;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  margin: 1em 0;
+}
+.title {
+  text-align: center;
+}
+.titleSection {
+  display: block;
+  background: #22a7f0;
+  position: fixed;
+  z-index: 100;
+  color: #fff;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  line-height: 50px;
+  padding: 0;
+  text-align: center;
+}
+.edit-mode span {
+  width: 200px;
+  display: inline-block;
+}
+.edit-mode textarea {
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 5em;
+}
+.edit-mode li {
+  margin: 1em 0;
+}
+.btn {
+  margin: 0 auto;
+  text-align: center;
+  color: #fff;
+  padding: 4px 12px;
+  cursor: pointer;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -o-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  font-size: 1em;
+}
+.comentario {
+  margin: 1em 0;
+}
+.agregar {
+  display: block;
+  background: #22a7f0;
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  line-height: 50px;
+  padding: 0;
+}
+.agregar:hover {
+  background: #1c8dcb;
+}
+.edit {
+  background: #26a65b;
+  width: 100%;
+  border: 1px solid #fff;
+}
+.edit:hover {
+  background: #1a8c49;
+}
+.add {
+  background: #22a7f0;
+  display: inline-block;
+  border: 1px solid #fff;
+}
+.add:hover {
+  background: #1c8dcb;
+}
+.delete {
+  background: #f71c2c;
+  border: 1px solid #c1c3c8;
+  display: inline-block;
+}
+.delete:hover {
+  background: #df2230;
+}
